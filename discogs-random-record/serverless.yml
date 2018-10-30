@@ -1,0 +1,19 @@
+service:
+  name: discogs-random-record
+
+plugins:
+  - serverless-webpack
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  environment:
+    DISCOGS_API_TOKEN: ${file(./env.json):DISCOGS_API_TOKEN}
+
+functions:
+  getRandomRecord:
+    handler: handler.getRandomRecord
+    events:
+      - http:
+          method: get
+          path: /

@@ -1,0 +1,15 @@
+# Dependencies
+node_modules
+
+# Serverless directories
+.serverless
+
+# Webpack directories
+.webpack
+
+# Build artifacts
+build/
+dist/
+
+# Sensitive
+env.json

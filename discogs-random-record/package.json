@@ -1,0 +1,30 @@
+{
+  "name": "discogs-random-record",
+  "version": "1.0.0",
+  "description": "Cloud function to get a random record from your Discogs collection",
+  "main": "handler.js",
+  "scripts": {
+    "start": "sls invoke local -f getRandomRecord",
+    "build": "sls package --stage production -p dist",
+    "deploy:dev": "sls deploy --stage dev",
+    "deploy:prod": "sls deploy --stage production",
+    "deploy:fn": "sls deploy function --function getRandomRecord"
+  },
+  "dependencies": {
+    "discojs": "^1.1.0",
+    "got": "^9.3.0",
+    "pure-fun": "^1.13.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.1",
+    "@types/got": "^8.3.4",
+    "@types/node": "^8.0.57",
+    "serverless-webpack": "^5.1.1",
+    "source-map-support": "^0.5.6",
+    "ts-loader": "^4.2.0",
+    "typescript": "^2.9.2",
+    "webpack": "^4.5.0"
+  },
+  "author": "Thibault Maekelbergh",
+  "license": "MIT"
+}
