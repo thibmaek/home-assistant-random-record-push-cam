@@ -5,8 +5,8 @@ Pushes a random record from your Discogs collection to a Home Assistant Push Cam
 ## Prerequisites
 
 - Account on AWS and logged in with it on `serverless`
-- Discogs account and a Discogs API token
-- A Push Camera entity set up on your Home Assistant instance
+- Discogs account and a [personal access token](https://www.discogs.com/settings/developers)
+- A [Push Camera entity](https://www.home-assistant.io/components/camera.push/) set up on your Home Assistant instance
 - Publically accessible Home Assitant API
 
 ## Getting Started
