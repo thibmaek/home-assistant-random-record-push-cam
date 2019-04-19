@@ -1,0 +1,15 @@
+# Dependencies
+node_modules
+
+# Secrets
+env.*
+.env.*
+
+# Artifacts
+build/
+dist/
+.serverless
+.webpack
+
+# Misc
+.DS_Store

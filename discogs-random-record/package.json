@@ -2,7 +2,14 @@
   "name": "discogs-random-record",
   "version": "1.0.0",
   "description": "Cloud function to get a random record from your Discogs collection",
+  "author": "Thibault Maekelbergh",
+  "license": "MIT",
+  "repository": "thibmaek/cloud-fns",
   "main": "handler.js",
+  "engines": {
+    "node": "10",
+    "npm": "6"
+  },
   "scripts": {
     "start": "sls invoke local -f getRandomRecord",
     "build": "sls package --stage production -p dist",
@@ -24,7 +31,5 @@
     "ts-loader": "^4.2.0",
     "typescript": "^2.9.2",
     "webpack": "^4.5.0"
-  },
-  "author": "Thibault Maekelbergh",
-  "license": "MIT"
+  }
 }
