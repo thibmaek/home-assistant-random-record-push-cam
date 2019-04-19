@@ -4,6 +4,10 @@ node_modules
 # Secrets
 env.*
 .env.*
+config.prod.json
+config.production.json
+config.stag.json
+config.staging.json
 
 # Artifacts
 build/

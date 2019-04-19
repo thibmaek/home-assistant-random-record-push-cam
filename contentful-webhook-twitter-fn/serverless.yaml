@@ -1,0 +1,23 @@
+service: contentful-webhook-twitter
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  environment:
+    TWITTER_ACCESS_TOKEN_SECRET: ${file(./config.${self:provider.stage}.json):TWITTER_ACCESS_TOKEN_SECRET}
+    TWITTER_ACCESS_TOKEN: ${file(./config.${self:provider.stage}.json):TWITTER_ACCESS_TOKEN}
+    TWITTER_CONSUMER_KEY: ${file(./config.${self:provider.stage}.json):TWITTER_CONSUMER_KEY}
+    TWITTER_CONSUMER_SECRET: ${file(./config.${self:provider.stage}.json):TWITTER_CONSUMER_SECRET}
+
+functions:
+  contentful_webhook_twitter:
+    handler: index.handler
+    events:
+      - http:
+          method: post
+          cors: true
+          path: '/'
