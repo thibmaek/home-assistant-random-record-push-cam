@@ -1,0 +1,3 @@
+[submodule "meetnet-proxy-api"]
+	path = meetnet-proxy-api
+	url = https://github.com/thibmaek/meetnet-proxy-api
