@@ -5,11 +5,12 @@
     "deploy": "sls deploy"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "got": "^9.6.0",
-    "node-html-parser": "^1.1.16",
     "serverless": "^1.50.0"
   },
   "devDependencies": {
+    "@types/cheerio": "^0.22.13",
     "@types/got": "^9.6.7",
     "serverless-offline": "^5.10.1",
     "serverless-webpack": "^5.3.1",

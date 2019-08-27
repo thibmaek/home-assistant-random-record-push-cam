@@ -1,21 +1,41 @@
 import got from 'got';
-import { parse } from 'node-html-parser';
+import $ from 'cheerio';
 
 export const handler = async (event) => {
+  const baseURL = 'https://ivago.be';
+  const requestURL = `${baseURL}/thuisafval/ophaling/ophaalkalender/${event.pathParameters.calendar}`;
+
   try {
-    const { body } = await got(`https://ivago.be/thuisafval/ophaling/ophaalkalender/${event.pathParameters.calendar}`);
-    const HTMLContents = parse(body.toString());
-    // @ts-ignore
-    const node = HTMLContents.querySelector('.volgende_ophaling')
-    node.childNodes.forEach(child => {
-      console.log(child.childNodes);
-    })
+    const collectionTypes = [];
+
+    const { body } = await got(requestURL);
+    const html = body.toString();
+
+    const nextCollectionDate = $('.volgende_ophaling_datum', html).text();
+    $('.volgende_ophaling_fracties', html)
+      .children()
+      .map((_i, link) => {
+        const imgNode = $('img', link);
+        collectionTypes.push({
+          type: imgNode.attr('alt'),
+          image: `${baseURL}${imgNode.attr('src')}`,
+        });
+      });
 
     return {
       statusCode: 200,
-      body: JSON.stringify({})
+      body: JSON.stringify({
+        nextCollectionDate,
+        collectionTypes,
+      })
     };
   } catch (error) {
-    throw error;
+    console.error(error);
+    return {
+      statusCode: 500,
+      message: 'Failed trying to get information from https://ivago.be',
+      error,
+      requestURL,
+    };
   }
 };
