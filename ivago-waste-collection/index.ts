@@ -1,12 +1,20 @@
 import got from 'got';
 import $ from 'cheerio';
 
+const images = {
+  rest: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-REST.jpg',
+  pmd: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-PMD.jpg',
+  papier: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-PAPIER.jpg',
+  gft: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-GFT.jpg',
+  glas: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-GLAS.jpg',
+}
+
 export const handler = async (event) => {
   const baseURL = 'https://ivago.be';
   const requestURL = `${baseURL}/thuisafval/ophaling/ophaalkalender/${event.pathParameters.calendar}`;
 
   try {
-    const collectionTypes = [];
+    const nextCollectionTypes = [];
 
     const { body } = await got(requestURL);
     const html = body.toString();
@@ -16,17 +24,19 @@ export const handler = async (event) => {
       .children()
       .map((_i, link) => {
         const imgNode = $('img', link);
-        collectionTypes.push({
-          type: imgNode.attr('alt'),
-          image: `${baseURL}${imgNode.attr('src')}`,
-        });
+        nextCollectionTypes.push(imgNode.attr('alt'));
       });
 
     return {
       statusCode: 200,
       body: JSON.stringify({
         nextCollectionDate,
-        collectionTypes,
+        images,
+        gft: nextCollectionTypes.includes('GFT'),
+        glas: nextCollectionTypes.includes('GLAS'),
+        papier: nextCollectionTypes.includes('PAPIER'),
+        rest: nextCollectionTypes.includes('REST'),
+        pmd: nextCollectionTypes.includes('PMD'),
       })
     };
   } catch (error) {
