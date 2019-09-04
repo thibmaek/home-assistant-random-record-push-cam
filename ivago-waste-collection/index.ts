@@ -1,5 +1,8 @@
 import got from 'got';
 import $ from 'cheerio';
+import parseDate from 'date-fns/parse';
+import formatDistance from 'date-fns/formatDistance';
+import nl from 'date-fns/locale/nl';
 
 const images = {
   rest: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-REST.jpg',
@@ -7,6 +10,18 @@ const images = {
   papier: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-PAPIER.jpg',
   gft: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-GFT.jpg',
   glas: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-GLAS.jpg',
+}
+
+const getDate = (date: string) => {
+  const dateObj = parseDate(date, "EEEE',' d MMMM", new Date(), { locale: nl });
+
+  return {
+    distance: formatDistance(dateObj, new Date(), {
+      addSuffix: true,
+    }),
+    date: dateObj,
+    formattedDate: date,
+  };
 }
 
 export const handler = async (event) => {
@@ -30,7 +45,7 @@ export const handler = async (event) => {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        nextCollectionDate,
+        nextCollectionDate: getDate(nextCollectionDate),
         images,
         gft: nextCollectionTypes.includes('GFT'),
         glas: nextCollectionTypes.includes('GLAS'),
