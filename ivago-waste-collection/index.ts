@@ -1,8 +1,7 @@
 import { APIGatewayEvent } from 'aws-lambda';
 import got from 'got';
 import $ from 'cheerio';
-import parseDate from 'date-fns/parse';
-import formatDistance from 'date-fns/formatDistance';
+import { isToday, parse as parseDate, formatDistance } from 'date-fns';
 import nl from 'date-fns/locale/nl';
 
 const images = {
@@ -14,15 +13,15 @@ const images = {
   grof: 'https://ivago.be/sites/all/themes/ivago/images/fractions/GROF+TEL.jpg'
 }
 
-const getDate = (date: string) => {
-  const dateObj = parseDate(date, "EEEE',' d MMMM", new Date(), { locale: nl });
+const getDate = (nlDateString: string) => {
+  const date = parseDate(nlDateString, "EEEE',' d MMMM", new Date(), { locale: nl });
 
   return {
-    distance: formatDistance(dateObj, new Date(), {
+    date,
+    formattedDate: nlDateString,
+    distance: isToday(date) ? 'Today' : formatDistance(date, new Date(), {
       addSuffix: true,
     }),
-    date: dateObj,
-    formattedDate: date,
   };
 }
 
