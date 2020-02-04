@@ -1,3 +1,4 @@
+import { APIGatewayEvent } from 'aws-lambda';
 import got from 'got';
 import $ from 'cheerio';
 import parseDate from 'date-fns/parse';
@@ -10,6 +11,7 @@ const images = {
   papier: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-PAPIER.jpg',
   gft: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-GFT.jpg',
   glas: 'https://ivago.be/sites/all/themes/ivago/images/fractions/HAH-GLAS.jpg',
+  grof: 'https://ivago.be/sites/all/themes/ivago/images/fractions/GROF+TEL.jpg'
 }
 
 const getDate = (date: string) => {
@@ -24,7 +26,7 @@ const getDate = (date: string) => {
   };
 }
 
-export const handler = async (event) => {
+export const handler = async (event: APIGatewayEvent) => {
   const baseURL = 'https://ivago.be';
   const requestURL = `${baseURL}/thuisafval/ophaling/ophaalkalender/${event.pathParameters.calendar}`;
 
@@ -52,6 +54,7 @@ export const handler = async (event) => {
         papier: nextCollectionTypes.includes('PAPIER'),
         rest: nextCollectionTypes.includes('REST'),
         pmd: nextCollectionTypes.includes('PMD'),
+        grof: nextCollectionTypes.includes('GROFVUIL OP AANVRAAG')
       })
     };
   } catch (error) {
