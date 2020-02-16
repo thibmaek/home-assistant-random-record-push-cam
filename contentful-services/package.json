@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "start": "sls offline",
+    "build": "sls package -p dist",
+    "deploy": "sls deploy --stage prod"
+  },
+  "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "@types/node": "^13.7.1",
+    "serverless-webpack": "^5.3.1",
+    "source-map-support": "^0.5.13",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.619.0",
+    "contentful-export": "^7.7.2"
+  }
+}
