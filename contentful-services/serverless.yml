@@ -28,7 +28,4 @@ functions:
     environment:
       BUCKET_NAME: ${self:service.name}
     events:
-      - schedule:
-          name: contentful-backup-nightly
-          description: "Backup Contentful space every 24 hours"
-          rate: rate(24 hours)
+      - schedule: rate(12 hours)
