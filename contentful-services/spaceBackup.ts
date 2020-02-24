@@ -22,7 +22,7 @@ async function uploadToS3(fileBuffer: Buffer) {
   return S3.putObject(params).promise();
 }
 
-export default async function handler() {
+export async function handler() {
   const exportDir = '/tmp/'
   const contentFile = 'contentful_backup.json'
   const options = {
